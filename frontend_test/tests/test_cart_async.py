@@ -49,11 +49,11 @@ class TestAsyncCart:
         base_page = BasePage(page)
         await base_page.open()
         [await i_task for i_task in add_events]
-        await base_page.click_cart_button()
+        cart_page = await base_page.click_cart_button()
         # endregion
         # region Assert
         expects = [
-            asyncio.create_task(expect(page.locator(f'#items[num={i}]')).to_be_visible())
+            asyncio.create_task(expect(cart_page.page.locator(f'#items[num={i}]')).to_be_visible())
             for i in range(1, 5)
         ]
         for exp in expects:
@@ -80,6 +80,7 @@ class TestAsyncCart:
         price = format_item_price(items[0].price)
         # endregion
         # region Assert
-        await expect(page.locator('.items[num=1]')).to_have_value(price)
+        await expect(cart_page.page.locator('.items[num=1]')).to_have_value(price)
         # endregion
+
     # endregion

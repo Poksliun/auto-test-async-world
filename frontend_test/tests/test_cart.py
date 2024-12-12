@@ -15,15 +15,16 @@ class TestCart:
         db_add_item(name='Name 1', price='100$')
         # endregion
         # region Act
-        page = BasePage(page)
-        page.authorize()
-        cart_page = page.click_cart_button()
+        base_page = BasePage(page)
+        base_page.authorize()
+        cart_page = base_page.click_cart_button()
         cart_page.choose_item()
         cart_page.buy_items()
         # endregion
         # region Assert
         ...
         # endregion
+
     # endregion
 
     # region Сценарий 2
@@ -40,20 +41,21 @@ class TestCart:
         db_add_item(name='Name 4', price='5.00')
         # endregion
         # region Act
-        page = BasePage()
-        page.open()
-        page.click_cart_button()
+        base_page = BasePage(page)
+        base_page.open()
+        cart_page = base_page.click_cart_button()
         # endregion
         # region Assert
         with check:
-            expect(page.locator('.items[num=1]')).to_be_visible()
+            expect(cart_page.page.locator('.items[num=1]')).to_be_visible()
         with check:
-            expect(page.locator('.items[num=2]')).to_be_visible()
+            expect(cart_page.page.locator('.items[num=2]')).to_be_visible()
         with check:
-            expect(page.locator('.items[num=3]')).to_be_visible()
+            expect(cart_page.page.locator('.items[num=3]')).to_be_visible()
         with check:
-            expect(page.locator('.items[num=4]')).to_be_visible()
+            expect(cart_page.page.locator('.items[num=4]')).to_be_visible()
         # endregion
+
     # endregion
 
     # region Сценарий 3
@@ -66,11 +68,12 @@ class TestCart:
         db_add_item(name='Name 1', price='100$')
         # endregion
         # region Act
-        cart_page = CartPage()
+        cart_page = CartPage(page)
         cart_page.open()
         price = format_item_price(cart_page.items[0].price)
         # endregion
         # region Assert
-        expect(page.locator('.items[num=1]')).to_have_value(price)
+        expect(cart_page.page.locator('.items[num=1]')).to_have_value(price)
         # endregion
+
     # endregion
