@@ -40,8 +40,9 @@ class TestCart:
         db_add_item(name='Name 4', price='5.00')
         # endregion
         # region Act
-        cart_page = CartPage()
-        cart_page.open()
+        page = BasePage()
+        page.open()
+        page.click_cart_button()
         # endregion
         # region Assert
         with check:
